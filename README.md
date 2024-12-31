@@ -101,22 +101,25 @@ endmodule
 ```
 
 
-/* Program for flipflops and verify its truth table in quartus using Verilog programming. 
+
 
 Developed by: ASTLE JOE A S
 RegisterNumber:24004571
-*/
+
 
 **RTL LOGIC UP COUNTER**
-![WhatsApp Image 2024-12-30 at 14 44 21_911e2a17](https://github.com/user-attachments/assets/8b07e3c0-86a1-4224-af44-01339db6632f)
+![image](https://github.com/user-attachments/assets/444a22b8-f6e7-425d-8cc8-eae31297454b)
+
 
 
 **TIMING DIAGRAM FOR IP COUNTER**
-![WhatsApp Image 2024-12-30 at 14 44 21_911e2a17](https://github.com/user-attachments/assets/36dfaa76-5c8c-4920-a134-8edde1786b5d)
+![image](https://github.com/user-attachments/assets/653df15c-9277-4d81-9514-ba6b1b938be8)
+
 
 
 **TRUTH TABLE**
-![325875099-865fb0d4-c01e-48fa-9753-c277cc1e6f6a](https://github.com/user-attachments/assets/ccbb141f-a9e5-442b-bf40-9dc589ab7e37)
+![image](https://github.com/user-attachments/assets/04f0508d-6889-4c6d-8b58-c1a03f12f97b)
+
 
 
 **RESULT**
