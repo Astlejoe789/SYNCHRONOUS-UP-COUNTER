@@ -27,20 +27,98 @@ The next flip-flop need only “recognize” that the first flip-flop’s Q outp
 However, the remaining flip-flops should be made ready to toggle only when all lower-order output bits are “high,” thus the need for AND gates.
 
 **Procedure**
+```
+1.Initialize the shift register to a known state (e.g., all zeros).
 
-/* write all the steps invloved */
+2.Input a bit serially into the shift register.
+
+3.Shift the contents of the register one position to the right (or left).
+
+4.Output the shifted bit from the last stage of the register.
+
+5.Repeat steps 2-4 for each bit you want to input and shift.
+```
+
 
 **PROGRAM**
 
+```
+module syn_counter (
+    input clk,    // Clock signal
+    input rst,    // Reset signal (active high)
+    output [3:0] q // 4-bit output
+);
+
+    wire [3:0] j, k; // J and K inputs for each JK flip-flop
+    wire [3:0] t;    // Toggle signal for each flip-flop
+
+    // Generate the toggle signals for each stage
+    assign j[0] = 1'b1; // First flip-flop toggles on every clock pulse
+    assign k[0] = 1'b1;
+    assign t[0] = q[0]; // Output of the first flip-flop
+
+    assign j[1] = q[0]; // Second flip-flop toggles on q[0] high
+    assign k[1] = q[0];
+    assign t[1] = q[1];
+
+    assign j[2] = q[0] & q[1]; // Third flip-flop toggles on q[1:0] high
+    assign k[2] = q[0] & q[1];
+    assign t[2] = q[2];
+
+    assign j[3] = q[0] & q[1] & q[2]; // Fourth flip-flop toggles on q[2:0] high
+    assign k[3] = q[0] & q[1] & q[2];
+    assign t[3] = q[3];
+
+    // Instantiate 4 JK flip-flops
+    jk_flipflop jk0 (.clk(clk), .rst(rst), .j(j[0]), .k(k[0]), .q(q[0]));
+    jk_flipflop jk1 (.clk(clk), .rst(rst), .j(j[1]), .k(k[1]), .q(q[1]));
+    jk_flipflop jk2 (.clk(clk), .rst(rst), .j(j[2]), .k(k[2]), .q(q[2]));
+    jk_flipflop jk3 (.clk(clk), .rst(rst), .j(j[3]), .k(k[3]), .q(q[3]));
+
+endmodule
+
+// JK flip-flop module
+module jk_flipflop (
+    input clk,    // Clock signal
+    input rst,    // Reset signal (active high)
+    input j,      // J input
+    input k,      // K input
+    output reg q  // Q output
+);
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            q <= 1'b0; // Reset output to 0
+        end else begin
+            case ({j, k})
+                2'b00: q <= q;       // No change
+                2'b01: q <= 1'b0;    // Reset
+                2'b10: q <= 1'b1;    // Set
+                2'b11: q <= ~q;      // Toggle
+            endcase
+        end
+    end
+endmodule
+```
+
+
 /* Program for flipflops and verify its truth table in quartus using Verilog programming. 
 
-Developed by: RegisterNumber:
+Developed by: ASTLE JOE A S
+RegisterNumber:24004571
 */
 
 **RTL LOGIC UP COUNTER**
+![WhatsApp Image 2024-12-30 at 14 44 21_911e2a17](https://github.com/user-attachments/assets/8b07e3c0-86a1-4224-af44-01339db6632f)
+
 
 **TIMING DIAGRAM FOR IP COUNTER**
+![WhatsApp Image 2024-12-30 at 14 44 21_911e2a17](https://github.com/user-attachments/assets/36dfaa76-5c8c-4920-a134-8edde1786b5d)
+
 
 **TRUTH TABLE**
+![325875099-865fb0d4-c01e-48fa-9753-c277cc1e6f6a](https://github.com/user-attachments/assets/ccbb141f-a9e5-442b-bf40-9dc589ab7e37)
 
-**RESULTS**
+
+**RESULT**
+
+Hence a 4 bit synchronous up counter is implemented correctly
